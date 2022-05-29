@@ -2,10 +2,9 @@
 
 This is an implementation of Myers diff algorithm, without the linear space refinment.
 
-The algorithm therefore runs in O((N+M)D) in time and space, where:
-* N is the size of the first element
-* M is the size of the second element
-* D is the number of differences
+The algorithm therefore runs in O((M+N)D) in time and space, where:
+* M, N are the sizes of the elements to diff
+* D is the number of differences between them
 
 ## Example
 
