@@ -44,7 +44,3 @@ from diff.html import create_html_diff
 html = create_html_diff("ABCABBA", "CBABAC")
 open("diff.html", "w").write(html)
 ```
-
-Produces:
-
-<pre><span style="background-color: #FFCDD2;">A</span><span style="background-color: #FFCDD2;">B</span>C<span style="background-color: #C8E6C9;">B</span>AB<span style="background-color: #FFCDD2;">B</span>A<span style="background-color: #C8E6C9;">C</span></pre>
