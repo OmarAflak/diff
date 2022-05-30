@@ -15,40 +15,37 @@ class Edit(Generic[T]):
     data: T
 
 def _diff(s1: Iterable[T], s2: Iterable[T]) -> list[tuple[int, int]]:
-    furthest_x: dict[int, tuple[int, list]] = {1: (0, [])}
+    furthest_x: dict[int, list[tuple[int, int]]] = {1: [(0, 0)]}
     M = len(s1)
     N = len(s2)
 
     for d in range(M + N + 1):
         for k in range(-d, d + 1, 2):
-            down = (k == -d or (k != d and furthest_x[k + 1][0] > furthest_x[k - 1][0]))
+            down = (k == -d or (k != d and furthest_x[k + 1][0] >= furthest_x[k - 1][0]))
             previous_k = k + 1 if down else k - 1
 
-            x_start, history = furthest_x[previous_k]
-            history = history[:]
+            path = furthest_x[previous_k][:]
 
-            x_middle = x_start if down else x_start + 1
-            y_middle = x_middle - k
-            history.append((x_middle, y_middle))
-
-            x_end = x_middle
+            x_end = path[-1][0] if down else path[-1][0] + 1
             y_end = x_end - k
+            path.append((x_end, y_end))
+
             while x_end < M and y_end < N and s1[x_end] == s2[y_end]:
                 x_end += 1
                 y_end += 1
-                history.append((x_end, y_end))
+                path.append((x_end, y_end))
 
-            furthest_x[k] = (x_end, history)
+            furthest_x[k] = path
 
             if x_end >= M and y_end >= N:
-                return history
+                return path
 
     assert False
 
 def diff(s1: Iterable[T], s2: Iterable[T]) -> list[Edit[T]]:
     edit_script: list[Edit[T]] = []
     pairs = _diff(s1, s2)
-    for i in range(1, len(pairs)):
+    for i in range(2, len(pairs)):
         dx = pairs[i][0] - pairs[i - 1][0]
         dy = pairs[i][1] - pairs[i - 1][1]
         if dx == 1 and dy == 1:
