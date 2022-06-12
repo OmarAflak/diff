@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Generic, Iterable, TypeVar, Optional
 from enum import Enum
 
-T = TypeVar("T")
+T = TypeVar('T')
 
 class Operation(Enum):
     INSERT = 1
@@ -16,7 +16,6 @@ class Edit(Generic[T]):
 
 def diff(s1: Iterable[T], s2: Iterable[T]) -> list[Edit[T]]:
     tail = _diff(s1, s2)
-    print(tail)
     head = tail.reverse()
 
     previous = head.previous
@@ -35,7 +34,7 @@ def diff(s1: Iterable[T], s2: Iterable[T]) -> list[Edit[T]]:
         elif dx == 0 and dy == 1:
             edit = Edit(Operation.INSERT, [s2[current.y - 1]])
         else:
-            raise RuntimeError("Error while parsing diff")
+            raise RuntimeError('Error while parsing diff')
 
         if not edit_script or edit_script[-1].operation != edit.operation:
             edit_script.append(edit)
@@ -91,4 +90,4 @@ def _diff(s1: Iterable[T], s2: Iterable[T]) -> _Point:
             if x_end >= M and y_end >= N:
                 return end_point
 
-    raise RuntimeError("Error while diffing")
+    raise RuntimeError('Error while diffing')
