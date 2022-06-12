@@ -63,16 +63,16 @@ class _Point:
         return _next
 
 def _diff(s1: Iterable[T], s2: Iterable[T]) -> _Point:
-    path: dict[int, _Point] = {1: _Point(0, 0)}
+    best_path: dict[int, _Point] = {1: _Point(0, 0)}
     M = len(s1)
     N = len(s2)
 
     for d in range(M + N + 1):
         for k in range(-d, d + 1, 2):
-            down = (k == -d or (k != d and path[k + 1].x > path[k - 1].x))
+            down = (k == -d or (k != d and best_path[k + 1].x > best_path[k - 1].x))
             previous_k = k + 1 if down else k - 1
 
-            last_point = path[previous_k]
+            last_point = best_path[previous_k]
 
             x_end = last_point.x if down else last_point.x + 1
             y_end = x_end - k
@@ -83,7 +83,7 @@ def _diff(s1: Iterable[T], s2: Iterable[T]) -> _Point:
                 y_end += 1
                 end_point = _Point(x_end, y_end, end_point)
 
-            path[k] = end_point
+            best_path[k] = end_point
 
             if x_end >= M and y_end >= N:
                 return end_point
