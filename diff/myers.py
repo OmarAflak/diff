@@ -61,8 +61,6 @@ class _Point:
             _next = current
             current = prev
         return _next
-        
-
 
 def _diff(s1: Iterable[T], s2: Iterable[T]) -> _Point:
     path: dict[int, _Point] = {1: _Point(0, 0)}
