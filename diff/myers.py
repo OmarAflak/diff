@@ -72,7 +72,7 @@ def _diff(s1: Iterable[T], s2: Iterable[T]) -> _Point:
 
     for d in range(M + N + 1):
         for k in range(-d, d + 1, 2):
-            down = (k == -d or (k != d and path[k + 1].x >= path[k - 1].x))
+            down = (k == -d or (k != d and path[k + 1].x > path[k - 1].x))
             previous_k = k + 1 if down else k - 1
 
             last_point = path[previous_k]
