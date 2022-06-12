@@ -11,16 +11,16 @@ The algorithm therefore runs in O((M+N)D) in time and space, where:
 The `diff` method can take any two sequences of objects. The only requirement is that the objects have the equality operator (`==`) defined.
 
 ```python
-from diff.myers import diff, EditType
+from diff.myers import diff, Operation
 
 # the diff method returns a list of edits that
 # turns the first sequence into the second
 for edit in diff([1, 2, 3], [2, 3, 4]):
-    if edit.type == EditType.KEEP:
+    if edit.operation == Operation.KEEP:
         print(f' {edit.data}')
-    if edit.type == EditType.INSERT:
+    if edit.operation == Operation.INSERT:
         print(f'+{edit.data}')
-    if edit.type == EditType.DELETE:
+    if edit.operation == Operation.DELETE:
         print(f'-{edit.data}')
 ```
 
