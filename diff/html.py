@@ -1,15 +1,16 @@
+from cgitb import html
 from typing import Iterable, TypeVar
 from diff.myers import diff, Operation
 
 T = TypeVar('T')
 
 def create_html_diff(s1: Iterable[T], s2: Iterable[T]) -> str:
-    result = '<pre>'
-    for edit in diff(s1, s2):
-        for data in edit.data:
-            result += _format_data(data, edit.operation)
-    result += '</pre>'
-    return result
+    html = ''.join(
+        _format_data(data, edit.operation)
+        for edit in diff(s1, s2)
+        for data in edit.data
+    )
+    return f'<pre>{html}</pre>'
 
 def _format_data(data: T, operation: Operation) -> str:
     if operation == Operation.KEEP:
